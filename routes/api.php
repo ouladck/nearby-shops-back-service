@@ -12,11 +12,20 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@login']);
 
-Route::resource('shops', API\ShopController::class, [
-    'except' => [
-        'store',
-        'update',
-        'destroy'
-    ]
-]);
+Route::get('logout', 'Auth\LoginController@logout');
+
+Route::post('register', 'Auth\LoginController@register');
+
+Route::group(['middleware' => 'auth:api'], function() {
+
+    Route::get('shops/favorites', 'API\ShopController@preferred');
+    Route::resource('shops', API\ShopController::class, [
+        'except' => [
+            'store',
+            'update',
+            'destroy'
+        ]
+    ]);
+});

@@ -32,4 +32,17 @@ class ShopController extends Controller
         return response()->json(compact('shop'));
     }
 
+
+    /**
+     * Display preferred shops
+     *
+     * @param Shop $shop
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function preferred()
+    {
+        $shop = Auth::user()->shops()->paginate(12);
+        return response()->json(compact('shop'));
+    }
+
 }
