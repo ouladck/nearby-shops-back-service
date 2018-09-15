@@ -16,7 +16,10 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $shops = Shop::paginate(12);
+        $lat = floatval(34.037582);
+        $lon = floatval(-6.751614);
+        $shops = Shop::nearest($lat, $lon);
+        $shops = $this->paginate($shops);
 
         return response()->json(compact('shops'));
     }

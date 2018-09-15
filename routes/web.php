@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('shops', API\ShopController::class, [
+    'except' => [
+        'store',
+        'update',
+        'destroy'
+    ]
+]);

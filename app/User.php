@@ -34,6 +34,8 @@ class User extends Authenticatable
      * @return something
      */
     function shops () {
-        return $this->belongsToMany('App\Shop');
+        return $this->belongsToMany('App\Shop')->withPivot('is_liked');
     }
+
+
 }
