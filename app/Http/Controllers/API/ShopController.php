@@ -44,8 +44,8 @@ class ShopController extends Controller
      */
     public function preferred()
     {
-        $shop = Auth::user()->shops()->paginate(12);
-        return response()->json(compact('shop'));
+        $shops = Auth::user()->shops()->whereIsLiked(true)->paginate(12);
+        return response()->json(compact('shops'));
     }
 
 }

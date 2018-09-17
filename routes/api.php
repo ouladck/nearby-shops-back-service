@@ -28,4 +28,10 @@ Route::group(['middleware' => 'auth:api'], function() {
             'destroy'
         ]
     ]);
+    Route::resource('shop_user', API\ShopUserController::class, [
+        'only' => [
+            'store',
+            'destroy'
+        ]
+    ]);
 });
