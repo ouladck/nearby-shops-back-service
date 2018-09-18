@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\ShopUser;
 use Auth;
 use Illuminate\Http\Request;
+use App\Jobs\DeleteDislikedJob;
 use App\Http\Controllers\Controller;
 
 class ShopUserController extends Controller
@@ -28,9 +29,12 @@ class ShopUserController extends Controller
             $data['is_liked'] = true;
         }
         else {
-            $data['is_disliked'] = false;
+            $data['is_disliked'] = true;
         }
         $shop_user = ShopUser::firstOrCreate($data);
+        if (!$request->is_liked) {
+            DeleteDislikedJob::dispatch($shop_user->id)->delay(now()->addMinutes(1));;
+        }
         return response()->json([
             'shop' => $shop_user,
             'message' => ($request->is_liked) ? 'Shop Liked' : 'Shop Disliked'

@@ -14,10 +14,10 @@ class ShopController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lat = floatval(34.037582);
-        $lon = floatval(-6.751614);
+        $lat = floatval($request->lat);
+        $lon = floatval($request->lon);
         $shops = Shop::nearest($lat, $lon);
         $shops = $this->paginate($shops);
 
