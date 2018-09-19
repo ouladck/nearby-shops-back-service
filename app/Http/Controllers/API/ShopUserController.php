@@ -33,7 +33,7 @@ class ShopUserController extends Controller
         }
         $shop_user = ShopUser::firstOrCreate($data);
         if (!$request->is_liked) {
-            DeleteDislikedJob::dispatch($shop_user->id)->delay(now()->addMinutes(1));;
+            DeleteDislikedJob::dispatch($shop_user->id)->delay(20 * 60);
         }
         return response()->json([
             'shop' => $shop_user,
